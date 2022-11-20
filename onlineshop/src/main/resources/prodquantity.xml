@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t:layoutdefinition xmlns:t="http://www.CaptainCasa.com/controllibrary/t" >
+
+<t:beanprocessing id="g_1" beanbinding="#{d.ProdquantityUI}" />
+<t:row id="g_2" >
+<t:spinner id="g_4" minvalue="0" value="#{d.ProdquantityUI.quantity}" width="100%" />
+</t:row>
+<t:rowdistance id="g_3" height="10" />
+<t:row id="g_7" >
+<t:label id="g_5" width="100%" />
+<t:button id="g_6" actionListener="#{d.ProdquantityUI.onOK}" text="#{d.ProdquantityUI.lblBtnOK}" />
+</t:row>
+
+</t:layoutdefinition>

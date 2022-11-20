@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t:layoutdefinition xmlns:t="http://www.CaptainCasa.com/controllibrary/t" >
+
+<t:beanprocessing id="g_1" beanbinding="#{d.ProdcatalogUI}" />
+<t:rowbodypane id="g_4" >
+<t:row id="g_10" >
+<t:fixgrid id="g_11" height="50%" objectbinding="#{d.ProdcatalogUI.rows}" width="100%" >
+<t:gridcol id="g_12" text="#{d.ProdcatalogUI.colImage}" width="100%" >
+<t:image id="g_5" image=".{product.productType.imageSource}" />
+</t:gridcol>
+<t:gridcol id="g_13" text="#{d.ProdcatalogUI.colDescription}" width="100%" >
+<t:label id="g_6" text=".{product.description}" />
+</t:gridcol>
+<t:gridcol id="g_7" text="#{d.ProdcatalogUI.colQuantity}" width="100%" >
+<t:field id="g_9" text=".{product.quantity}" />
+</t:gridcol>
+<t:gridcol id="g_8" text="#{d.ProdcatalogUI.colPrice}" width="100%" >
+<t:formattedfield id="g_15" format="double" formatmask="dec2" value=".{product.price}" />
+</t:gridcol>
+</t:fixgrid>
+</t:row>
+<t:rowdistance id="g_19" height="10" />
+<t:row id="g_17" >
+<t:label id="g_3" text="Auswahl:" width="100" />
+<t:image id="g_2" image="#{d.ProdcatalogUI.selectedProduct.productType.imageSource}" />
+</t:row>
+<t:rowdistance id="g_21" height="10" />
+<t:row id="g_22" >
+<t:label id="g_24" text="Menge:" width="100" />
+<t:field id="g_26" text="#{d.ProdcatalogUI.quantity}" width="100" />
+</t:row>
+<t:rowdistance id="g_28" height="20" />
+<t:row id="g_30" >
+<t:label id="g_31" text="Gesamt:" width="100" />
+<t:formattedfield id="g_33" format="double" formatmask="dec2" value="#{d.ProdcatalogUI.totalAmount}" width="100" />
+</t:row>
+<t:rowdistance id="g_35" height="20" />
+<t:row id="g_14" >
+<t:label id="g_16" width="100%" />
+<t:button id="g_37" actionListener="#{d.ProdcatalogUI.onAddToCart}" enabled="#{d.ProdcatalogUI.btnAddToCartEnabled}" text="In den Einkaufswagen" />
+</t:row>
+</t:rowbodypane>
+
+</t:layoutdefinition>

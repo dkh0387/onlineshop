@@ -8,7 +8,7 @@ import de.dkh.db.bo.User;
 import lombok.Getter;
 
 /**
- * Manage all the actions on the {@linkplain User}.
+ * Collect, sort and hold all the {@linkplain User}.
  * 
  * @author dkh
  *

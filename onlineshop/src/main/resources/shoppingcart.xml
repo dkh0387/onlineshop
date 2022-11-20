@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t:layoutdefinition xmlns:t="http://www.CaptainCasa.com/controllibrary/t" >
+
+<t:beanprocessing id="g_1" beanbinding="#{d.ShoppingcartUI}" />
+<t:rowbodypane id="g_2" sizetocontentinpopup="true" >
+<t:row id="g_5" >
+<t:label id="g_13" font="weight:bold" rendered="#{d.ShoppingcartUI.emptyCartRendered}" text="Ihr Einkaufswagen ist leer" width="100%" />
+<t:fixgrid id="g_6" objectbinding="#{d.ShoppingcartUI.rows}" rendered="#{d.ShoppingcartUI.gridRendered}" width="100%" >
+<t:gridcol id="g_7" text="#{d.ShoppingcartUI.colImage}" width="100%" >
+<t:image id="g_10" image=".{product.productType.imageSource}" />
+</t:gridcol>
+<t:gridcol id="g_8" text="#{d.ShoppingcartUI.colQuantity}" width="100" >
+<t:field id="g_11" text=".{prodSelection.quantity}" />
+</t:gridcol>
+<t:gridcol id="g_9" text="#{d.ShoppingcartUI.colPrice}" width="100" >
+<t:formattedfield id="g_12" format="double" formatmask="dec2" value=".{prodSelection.totalAmount}" />
+</t:gridcol>
+</t:fixgrid>
+</t:row>
+</t:rowbodypane>
+<t:rowfooter id="g_18" >
+<t:coldistance id="g_15" width="100%" />
+<t:button id="g_16" actionListener="#{d.ShoppingcartUI.onPlaceOrder}" enabled="#{d.ShoppingcartUI.gridRendered}" text="Bestellung aufgeben" width="100+" />
+</t:rowfooter>
+
+</t:layoutdefinition>

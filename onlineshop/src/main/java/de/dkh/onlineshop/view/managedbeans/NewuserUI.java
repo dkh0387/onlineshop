@@ -104,7 +104,6 @@ public class NewuserUI extends PageBean implements Serializable {
 		boolean validMail = validator.validateMail(mail);
 
 		if (emptyFields != null && (emptyFields.isEmpty() && validMail)) {
-
 			User newUser = new User(getMaxUserID() + 1, name, adress, mail, bday);
 			getUserSet().add(newUser);
 			newUserSet.add(newUser);

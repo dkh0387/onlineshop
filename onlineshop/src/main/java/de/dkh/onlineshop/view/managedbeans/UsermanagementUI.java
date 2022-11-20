@@ -46,8 +46,13 @@ public class UsermanagementUI extends PageBean implements Serializable {
 	protected FIXGRIDListBinding<UserItem> rows = new FIXGRIDListBinding<UserItem>();
 	@Getter
 	private UserManagementService service;
+	@Getter
 	@Setter
 	private Set<User> selectedUserSet = new HashSet<>();
+	@Getter
+	@Setter
+	private User selectedUser;
+	private ProdcatalogUI prodCatalogUI;
 	// ------------------------------------------------------------------------
 	// inner classes
 	// ------------------------------------------------------------------------
@@ -61,7 +66,7 @@ public class UsermanagementUI extends PageBean implements Serializable {
 		private static final long serialVersionUID = 8108052725578837558L;
 		@Getter
 		@Setter
-		protected User user;
+		private User user;
 
 		public UserItem(User user) {
 			this.user = user;
@@ -75,6 +80,8 @@ public class UsermanagementUI extends PageBean implements Serializable {
 		@Override
 		public void onRowSelect() {
 			selectedUserSet.add(user);
+			selectedUser = user;
+			prodCatalogUI.setSelectedUser(user);
 		}
 
 	}
@@ -100,6 +107,8 @@ public class UsermanagementUI extends PageBean implements Serializable {
 		rows.getItems().clear();
 		service.getUserSet().stream().map(user -> new UserItem(user)).forEach(item -> rows.getItems().add(item));
 		rows.getItems().sort(getRowComparator());
+		selectedUser = null;
+		selectedUserSet = new HashSet<>();
 	}
 
 	/**
@@ -114,6 +123,41 @@ public class UsermanagementUI extends PageBean implements Serializable {
 				new DefaultModalPopupListener(this, newUserUI));
 		popup.setLeft(0);
 		popup.setLeftTopReferenceCentered();
+	}
+
+	/**
+	 * Open the shopping cart {@linkplain ProdcatalogUI}.
+	 * 
+	 * @param event
+	 */
+	public void onOpenProdCatalog(ActionEvent event) {
+
+		if (selectedUser != null) {
+			prodCatalogUI = prodCatalogUI == null ? new ProdcatalogUI(this) : prodCatalogUI;
+			ModalPopup popup = openModalPopup(prodCatalogUI, Constants.PROD_CATALOG_PAGE_TITLE, 800, 500,
+					new DefaultModalPopupListener(this, prodCatalogUI));
+			popup.setLeft(0);
+			popup.setLeftTopReferenceCentered();
+		} else if (rows.getSelectedItems().size() > 1) {
+			Statusbar.outputAlert(Constants.SHOW_PROD_CATALOG_MULTI_USER_ERROR);
+		} else {
+			Statusbar.outputAlert(Constants.SHOW_PROD_CATALOG_NO_SEL_USER_ERROR);
+		}
+	}
+
+	public void onOpenShoppingcart(ActionEvent event) {
+
+		if (selectedUser != null) {
+			ShoppingcartUI shoppingcartUI = new ShoppingcartUI(selectedUser, this);
+			ModalPopup popup = openModalPopup(shoppingcartUI, Constants.PROD_SHOPPING_CART_PAGE_TITLE, 800, 500,
+					new DefaultModalPopupListener(this, shoppingcartUI));
+			popup.setLeft(0);
+			popup.setLeftTopReferenceCentered();
+		} else if (rows.getSelectedItems().size() > 1) {
+			Statusbar.outputAlert(Constants.SHOW_SHOPPING_CART_MULTI_USER_ERROR);
+		} else {
+			Statusbar.outputAlert(Constants.SHOW_SHOPPING_CART_NO_SEL_USER_ERROR);
+		}
 	}
 
 	public void onRemoveSelectedUsers(ActionEvent event) {
@@ -160,15 +204,6 @@ public class UsermanagementUI extends PageBean implements Serializable {
 		rows.getItems().sort(getRowComparator());
 	}
 
-	// ------------------------------------------------------------------------
-	// private usage
-	// ------------------------------------------------------------------------
-	private void deleteSelectedUsers() {
-		service.getUserSet().removeAll(selectedUserSet);
-		service.sort();
-		selectedUserSet = new HashSet<>();
-	}
-
 	/**
 	 * No Test needed since the {@linkplain User#getComparator()} already covered in
 	 * {@linkplain UserTest}.
@@ -183,6 +218,15 @@ public class UsermanagementUI extends PageBean implements Serializable {
 				return User.getComparator().compare(o1.getUser(), o2.getUser());
 			}
 		};
+	}
+
+	// ------------------------------------------------------------------------
+	// private usage
+	// ------------------------------------------------------------------------
+	private void deleteSelectedUsers() {
+		service.getUserSet().removeAll(selectedUserSet);
+		service.sort();
+		selectedUserSet = new HashSet<>();
 	}
 
 }

@@ -2,9 +2,11 @@ package de.dkh.db.bo;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +16,6 @@ import lombok.Setter;
  * @author dkh
  *
  */
-@AllArgsConstructor
 public class User {
 	@Getter
 	@Setter
@@ -31,6 +32,18 @@ public class User {
 	@Getter
 	@Setter
 	private LocalDate bday;
+	@Getter
+	@Setter
+	private Map<Product, ProductSelection> prodSelectionMap = new HashMap<>();
+
+	public User(int id, String name, String adress, String mail, LocalDate bday) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.adress = adress;
+		this.mail = mail;
+		this.bday = bday;
+	}
 
 	@Override
 	public int hashCode() {
