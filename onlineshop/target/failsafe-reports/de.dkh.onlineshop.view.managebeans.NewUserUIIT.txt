@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: de.dkh.onlineshop.view.managebeans.NewUserUIIT
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.529 s - in de.dkh.onlineshop.view.managebeans.NewUserUIIT
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.964 s - in de.dkh.onlineshop.view.managebeans.NewUserUIIT
