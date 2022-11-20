@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t:layoutdefinition xmlns:t="http://www.CaptainCasa.com/controllibrary/t" >
+
+<t:beanprocessing id="g_1" beanbinding="#{d.NewuserUI}" />
+<t:rowdistance id="g_6" height="20" />
+<t:row id="g_4" >
+<t:coldistance id="g_7" />
+<t:label id="g_5" text="#{d.NewuserUI.lblName}" width="150" />
+<t:field id="g_9" bgpaint="bgbackground_empty(#fff2cc)" text="#{d.NewuserUI.name}" width="90%" />
+</t:row>
+<t:rowdistance id="g_10" height="20" />
+<t:row id="g_19" >
+<t:coldistance id="g_20" />
+<t:label id="g_21" text="#{d.NewuserUI.lblAdress}" width="150" />
+<t:field id="g_22" bgpaint="bgbackground_empty(#fff2cc)" text="#{d.NewuserUI.adress}" width="90%" />
+</t:row>
+<t:rowdistance id="g_11" height="20" />
+<t:row id="g_26" >
+<t:coldistance id="g_27" />
+<t:label id="g_28" text="#{d.NewuserUI.lblMail}" width="150" />
+<t:field id="g_29" bgpaint="bgbackground_empty(#fff2cc)" text="#{d.NewuserUI.mail}" width="90%" />
+</t:row>
+<t:rowdistance id="g_12" height="20" />
+<t:row id="g_31" >
+<t:coldistance id="g_32" />
+<t:label id="g_33" text="#{d.NewuserUI.lblBday}" width="150" />
+<t:formattedfield id="g_13" bgpaint="bgbackground_empty(#fff2cc)" format="date" value="#{d.NewuserUI.bday}" width="15%" />
+</t:row>
+<t:rowbodypane id="g_17" />
+<t:rowfooter id="g_24" >
+<t:coldistance id="g_35" width="100%" />
+<t:button id="g_15" actionListener="#{d.NewuserUI.onOK}" text="#{d.NewuserUI.lblBtnOK}" />
+</t:rowfooter>
+
+</t:layoutdefinition>

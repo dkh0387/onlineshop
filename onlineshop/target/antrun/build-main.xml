@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <zip basedir="C:\privat\IT\workspaces\obi\onlineshop\target" destfile="C:\privat\IT\workspaces\obi\onlineshop/target/onlineshop_0.0.1.zip" includes="onlineshop.war" />
+  </target>
+</project>

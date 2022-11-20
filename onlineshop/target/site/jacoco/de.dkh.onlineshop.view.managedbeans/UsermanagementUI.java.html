@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsermanagementUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">onlineshop Maven Webapp</a> &gt; <a href="index.source.html" class="el_package">de.dkh.onlineshop.view.managedbeans</a> &gt; <span class="el_source">UsermanagementUI.java</span></div><h1>UsermanagementUI.java</h1><pre class="source lang-java linenums">package de.dkh.onlineshop.view.managedbeans;
+
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.faces.event.ActionEvent;
+
+import org.eclnt.editor.annotations.CCGenClass;
+import org.eclnt.jsfserver.defaultscreens.ModalPopup;
+import org.eclnt.jsfserver.defaultscreens.Statusbar;
+import org.eclnt.jsfserver.defaultscreens.YESNOPopup;
+import org.eclnt.jsfserver.defaultscreens.YESNOPopup.IYesNoListener;
+import org.eclnt.jsfserver.elements.impl.FIXGRIDItem;
+import org.eclnt.jsfserver.elements.impl.FIXGRIDListBinding;
+import org.eclnt.jsfserver.elements.util.DefaultModalPopupListener;
+import org.eclnt.jsfserver.pagebean.PageBean;
+
+import de.dkh.core.Constants;
+import de.dkh.db.bo.User;
+import de.dkh.service.UserManagementService;
+import lombok.Getter;
+import lombok.Setter;
+
+@CCGenClass(expressionBase = &quot;#{d.UsermanagementUI}&quot;)
+public class UsermanagementUI extends PageBean implements Serializable {
+
+	private static final long serialVersionUID = 3392183545165173825L;
+<span class="nc" id="L30">	@Getter</span>
+	private String pageName = &quot;/usermanagement.xml&quot;;
+<span class="nc" id="L32">	@Getter</span>
+	private String rootExpressionUsedInPage = &quot;#{d.UsermanagementUI}&quot;;
+<span class="nc" id="L34">	@Getter</span>
+	private String pageTitle = Constants.PAGE_TITLE;
+<span class="nc" id="L36">	@Getter</span>
+	private String colName = Constants.USER_NAME;
+<span class="nc" id="L38">	@Getter</span>
+	private String colAdress = Constants.USER_ADRESS;
+<span class="nc" id="L40">	@Getter</span>
+	private String colMail = Constants.USER_MAIL;
+<span class="nc" id="L42">	@Getter</span>
+	private String colBday = Constants.USER_BDAY;
+<span class="nc" id="L44">	@Getter</span>
+<span class="nc" id="L45">	@Setter</span>
+	protected FIXGRIDListBinding&lt;UserItem&gt; rows = new FIXGRIDListBinding&lt;UserItem&gt;();
+<span class="nc" id="L47">	@Getter</span>
+	private UserManagementService service;
+<span class="nc" id="L49">	@Setter</span>
+	private Set&lt;User&gt; selectedUserSet = new HashSet&lt;&gt;();
+	// ------------------------------------------------------------------------
+	// inner classes
+	// ------------------------------------------------------------------------
+
+	/* Listener to the user of the page bean. */
+	public interface IListener extends Serializable {
+	}
+
+	public class UserItem extends FIXGRIDItem implements java.io.Serializable {
+
+		private static final long serialVersionUID = 8108052725578837558L;
+<span class="nc" id="L62">		@Getter</span>
+<span class="nc" id="L63">		@Setter</span>
+		protected User user;
+
+<span class="nc" id="L66">		public UserItem(User user) {</span>
+<span class="nc" id="L67">			this.user = user;</span>
+
+<span class="nc" id="L69">		}</span>
+
+		@Override
+		public void onRowExecute() {
+<span class="nc" id="L73">		}</span>
+
+		@Override
+		public void onRowSelect() {
+<span class="nc" id="L77">			selectedUserSet.add(user);</span>
+<span class="nc" id="L78">		}</span>
+
+	}
+
+	// ------------------------------------------------------------------------
+	// members
+	// ------------------------------------------------------------------------
+
+	private IListener listener;
+
+	// ------------------------------------------------------------------------
+	// constructors &amp; initialization
+	// ------------------------------------------------------------------------
+
+<span class="nc" id="L92">	public UsermanagementUI() {</span>
+<span class="nc" id="L93">		prepare(null);</span>
+<span class="nc" id="L94">	}</span>
+
+	// ------------------------------------------------------------------------
+	// public usage
+	// ------------------------------------------------------------------------
+	public void refreshGrid() {
+<span class="nc" id="L100">		rows.getItems().clear();</span>
+<span class="nc" id="L101">		service.getUserSet().stream().map(user -&gt; new UserItem(user)).forEach(item -&gt; rows.getItems().add(item));</span>
+<span class="nc" id="L102">		rows.getItems().sort(getRowComparator());</span>
+<span class="nc" id="L103">	}</span>
+
+	/**
+	 * No Test needed here since the add-logic already covered in
+	 * {@linkplain NewUserUIIT}.
+	 * 
+	 * @param event
+	 */
+	public void onAddUser(ActionEvent event) {
+<span class="nc" id="L112">		NewuserUI newUserUI = new NewuserUI(this);</span>
+<span class="nc" id="L113">		ModalPopup popup = openModalPopup(newUserUI, Constants.NEW_USER_PAGE_TITLE, 800, 500,</span>
+				new DefaultModalPopupListener(this, newUserUI));
+<span class="nc" id="L115">		popup.setLeft(0);</span>
+<span class="nc" id="L116">		popup.setLeftTopReferenceCentered();</span>
+<span class="nc" id="L117">	}</span>
+
+	public void onRemoveSelectedUsers(ActionEvent event) {
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (selectedUserSet.isEmpty()) {</span>
+<span class="nc" id="L122">			Statusbar.outputAlert(Constants.USER_DELETE_NO_SELECTION);</span>
+<span class="nc" id="L123">			return;</span>
+		}
+<span class="nc" id="L125">		YESNOPopup popup = YESNOPopup.createInstance(Constants.USER_DELETE_DIALOG_TITLE,</span>
+<span class="nc" id="L126">				Constants.USER_DELETE_DIALOG_TEXT, new IYesNoListener() {</span>
+					@Override
+					public void reactOnYes() {
+<span class="nc" id="L129">						deleteSelectedUsers();</span>
+<span class="nc" id="L130">						refreshGrid();</span>
+<span class="nc" id="L131">					}</span>
+
+					@Override
+					public void reactOnNo() {
+
+<span class="nc" id="L136">					}</span>
+				});
+<span class="nc" id="L138">		popup.setYesButtonImage(null);</span>
+<span class="nc" id="L139">		popup.setNoButtonImage(null);</span>
+<span class="nc" id="L140">		popup.getModalPopup().setStartfromrootwindow(true);</span>
+<span class="nc" id="L141">		popup.getModalPopup().setLeft(0);</span>
+<span class="nc" id="L142">		popup.getModalPopup().setLeftTopReferenceCentered();</span>
+
+<span class="nc" id="L144">	}</span>
+
+	public void onReload(ActionEvent event) {
+<span class="nc" id="L147">		service = new UserManagementService();</span>
+<span class="nc" id="L148">		prepare(null);</span>
+<span class="nc" id="L149">	}</span>
+
+	/*
+	 * Initialization of the bean. Add any parameter that is required within your
+	 * scenario.
+	 */
+	public void prepare(IListener listener) {
+<span class="nc" id="L156">		this.listener = listener;</span>
+<span class="nc" id="L157">		rows.getItems().clear();</span>
+<span class="nc" id="L158">		service = new UserManagementService();</span>
+<span class="nc" id="L159">		service.getUserSet().stream().map(user -&gt; new UserItem(user)).forEach(item -&gt; rows.getItems().add(item));</span>
+<span class="nc" id="L160">		rows.getItems().sort(getRowComparator());</span>
+<span class="nc" id="L161">	}</span>
+
+	// ------------------------------------------------------------------------
+	// private usage
+	// ------------------------------------------------------------------------
+	private void deleteSelectedUsers() {
+<span class="nc" id="L167">		service.getUserSet().removeAll(selectedUserSet);</span>
+<span class="nc" id="L168">		service.sort();</span>
+<span class="nc" id="L169">		selectedUserSet = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L170">	}</span>
+
+	/**
+	 * No Test needed since the {@linkplain User#getComparator()} already covered in
+	 * {@linkplain UserTest}.
+	 * 
+	 * @return
+	 */
+	public Comparator&lt;UserItem&gt; getRowComparator() {
+<span class="nc" id="L179">		return new Comparator&lt;UserItem&gt;() {</span>
+
+			@Override
+			public int compare(UserItem o1, UserItem o2) {
+<span class="nc" id="L183">				return User.getComparator().compare(o1.getUser(), o2.getUser());</span>
+			}
+		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

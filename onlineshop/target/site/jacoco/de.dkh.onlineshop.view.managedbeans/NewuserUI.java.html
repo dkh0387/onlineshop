@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NewuserUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">onlineshop Maven Webapp</a> &gt; <a href="index.source.html" class="el_package">de.dkh.onlineshop.view.managedbeans</a> &gt; <span class="el_source">NewuserUI.java</span></div><h1>NewuserUI.java</h1><pre class="source lang-java linenums">package de.dkh.onlineshop.view.managedbeans;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.faces.event.ActionEvent;
+
+import org.eclnt.editor.annotations.CCGenClass;
+import org.eclnt.jsfserver.defaultscreens.Statusbar;
+import org.eclnt.jsfserver.pagebean.PageBean;
+
+import de.dkh.core.Constants;
+import de.dkh.core.Validator;
+import de.dkh.db.bo.User;
+import de.dkh.service.UserManagementService;
+import lombok.Getter;
+import lombok.Setter;
+
+@CCGenClass(expressionBase = &quot;#{d.NewuserUI}&quot;)
+public class NewuserUI extends PageBean implements Serializable {
+
+	private static final long serialVersionUID = -2445728022309238839L;
+<span class="nc" id="L27">	@Getter</span>
+	private String pageName = &quot;/newuser.xml&quot;;
+<span class="nc" id="L29">	@Getter</span>
+	private String rootExpressionUsedInPage = &quot;#{d.NewuserUI}&quot;;
+<span class="nc" id="L31">	@Getter</span>
+	private String pageTitle = Constants.NEW_USER_PAGE_TITLE;
+<span class="nc" id="L33">	@Getter</span>
+	private String lblName = Constants.USER_NAME;
+<span class="nc" id="L35">	@Getter</span>
+	private String lblAdress = Constants.USER_ADRESS;
+<span class="nc" id="L37">	@Getter</span>
+	private String lblMail = Constants.USER_MAIL;
+<span class="nc" id="L39">	@Getter</span>
+	private String lblBday = Constants.USER_BDAY;
+<span class="nc" id="L41">	@Getter</span>
+	private String lblBtnOK = Constants.BTN_OK;
+	// ------------------------------------------------------------------------
+	// inner classes
+	// ------------------------------------------------------------------------
+
+	/* Listener to the user of the page bean. */
+	public interface IListener extends Serializable {
+	}
+
+	// ------------------------------------------------------------------------
+	// members
+	// ------------------------------------------------------------------------
+<span class="nc" id="L54">	@Getter</span>
+<span class="nc" id="L55">	@Setter</span>
+	private String name;
+<span class="nc" id="L57">	@Getter</span>
+<span class="nc" id="L58">	@Setter</span>
+	private String adress;
+<span class="nc" id="L60">	@Getter</span>
+<span class="nc" id="L61">	@Setter</span>
+	private String mail;
+<span class="nc" id="L63">	@Getter</span>
+<span class="nc" id="L64">	@Setter</span>
+	private LocalDate bday;
+	private UsermanagementUI parentUI;
+	private IListener m_listener;
+<span class="nc" id="L68">	@Setter</span>
+	private Validator validator;
+<span class="nc" id="L70">	@Getter</span>
+<span class="nc" id="L71">	@Setter</span>
+	private Set&lt;User&gt; newUserSet = new HashSet&lt;&gt;();
+
+	// ------------------------------------------------------------------------
+	// constructors &amp; initialization
+	// ------------------------------------------------------------------------
+
+<span class="nc" id="L78">	public NewuserUI() {</span>
+<span class="nc" id="L79">	}</span>
+
+<span class="nc" id="L81">	public NewuserUI(UsermanagementUI parentUI) {</span>
+<span class="nc" id="L82">		this.parentUI = parentUI;</span>
+<span class="nc" id="L83">		validator = new Validator();</span>
+<span class="nc" id="L84">	}</span>
+
+	/**
+	 * For testing purpose only!
+	 * 
+	 * @param parentUI
+	 */
+<span class="nc" id="L91">	public NewuserUI(UsermanagementUI parentUI, Validator validator) {</span>
+<span class="nc" id="L92">		this.parentUI = parentUI;</span>
+<span class="nc" id="L93">		this.validator = validator;</span>
+<span class="nc" id="L94">	}</span>
+
+	// ------------------------------------------------------------------------
+	// public usage
+	// ------------------------------------------------------------------------
+	public void onOK(ActionEvent event) {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		Map&lt;String, Object&gt; map = Map.of(Constants.USER_NAME, name == null ? &quot;&quot; : name, Constants.USER_ADRESS,</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">				adress == null ? &quot;&quot; : adress, Constants.USER_MAIL, mail == null ? &quot;&quot; : mail, Constants.USER_BDAY,</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				bday == null ? &quot;&quot; : bday);</span>
+<span class="nc" id="L103">		List&lt;String&gt; emptyFields = validator.validateFields(map);</span>
+<span class="nc" id="L104">		boolean validMail = validator.validateMail(mail);</span>
+
+<span class="nc bnc" id="L106" title="All 6 branches missed.">		if (emptyFields != null &amp;&amp; (emptyFields.isEmpty() &amp;&amp; validMail)) {</span>
+
+<span class="nc" id="L108">			User newUser = new User(getMaxUserID() + 1, name, adress, mail, bday);</span>
+<span class="nc" id="L109">			getUserSet().add(newUser);</span>
+<span class="nc" id="L110">			newUserSet.add(newUser);</span>
+<span class="nc" id="L111">			parentUI.refreshGrid();</span>
+<span class="nc" id="L112">			parentUI.closePopup(this);</span>
+<span class="nc" id="L113">		} else {</span>
+<span class="nc" id="L114">			Statusbar.outputError(</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">					!emptyFields.isEmpty() ? String.format(Constants.USER_NEW_FIELDS_ERROR, emptyFields.toString())</span>
+<span class="nc" id="L116">							: Constants.USER_NEW_MAIL_ERROR);</span>
+		}
+<span class="nc" id="L118">	}</span>
+
+	/*
+	 * Initialization of the bean. Add any parameter that is required within your
+	 * scenario.
+	 */
+	public void prepare(IListener listener) {
+<span class="nc" id="L125">		m_listener = listener;</span>
+<span class="nc" id="L126">	}</span>
+
+	// ------------------------------------------------------------------------
+	// private usage
+	// ------------------------------------------------------------------------
+	/**
+	 * Find the mx. id presented in the
+	 * {@linkplain UserManagementService#getUserSet()}. If the set is empty return
+	 * -1.
+	 * 
+	 * @return
+	 */
+	private int getMaxUserID() {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		return getUserSet().isEmpty() ? -1 : getUserSet().stream().mapToInt(User::getId).max().getAsInt();</span>
+	}
+
+	private Set&lt;User&gt; getUserSet() {
+<span class="nc" id="L143">		return parentUI.getService().getUserSet();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

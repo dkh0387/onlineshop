@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+onlineshop Maven Webapp,de.dkh.onlineshop.view.managedbeans,UsermanagementUI,235,0,2,0,47,0,24,0,23,0
+onlineshop Maven Webapp,de.dkh.onlineshop.view.managedbeans,UsermanagementUI.UserItem,25,0,0,0,8,0,5,0,5,0
+onlineshop Maven Webapp,de.dkh.onlineshop.view.managedbeans,UsermanagementUI.new Comparator() {...},13,0,0,0,2,0,2,0,2,0
+onlineshop Maven Webapp,de.dkh.onlineshop.view.managedbeans,UsermanagementUI.new YESNOPopup.IYesNoListener() {...},14,0,0,0,5,0,3,0,3,0
+onlineshop Maven Webapp,de.dkh.onlineshop.view.managedbeans,Dispatcher,15,0,0,0,6,0,4,0,4,0
+onlineshop Maven Webapp,de.dkh.onlineshop.view.managedbeans,NewuserUI,298,0,18,0,49,0,35,0,26,0
+onlineshop Maven Webapp,de.dkh.core,Validator,0,47,0,6,0,15,0,8,0,5
+onlineshop Maven Webapp,de.dkh.service,UserManagementService,1523,0,0,0,200,0,4,0,4,0
+onlineshop Maven Webapp,de.dkh.db.bo,User,70,25,8,0,18,3,15,3,11,3
+onlineshop Maven Webapp,de.dkh.db.bo,User.new Comparator() {...},9,18,5,3,3,5,4,2,0,2

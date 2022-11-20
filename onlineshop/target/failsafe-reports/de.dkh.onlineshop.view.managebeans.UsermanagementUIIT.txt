@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: de.dkh.onlineshop.view.managebeans.UsermanagementUIIT
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.078 s - in de.dkh.onlineshop.view.managebeans.UsermanagementUIIT
